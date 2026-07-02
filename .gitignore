@@ -3,6 +3,11 @@ target/
 .mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
+out/
+*.class
+*.jar
+*.war
+*.ear
 
 ### STS ###
 .apt_generated
@@ -37,3 +42,7 @@ build/
 data/
 logs/
 *.log
+
+### OS and System Files ###
+.DS_Store
+Thumbs.db
