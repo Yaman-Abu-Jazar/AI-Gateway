@@ -1,0 +1,71 @@
+spring:
+  application:
+    name: ai-gateway
+  profiles:
+    active: ${SPRING_PROFILES_ACTIVE:dev}
+  jpa:
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: true
+    hibernate:
+      ddl-auto: validate
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+
+server:
+  port: ${SERVER_PORT:8080}
+  error:
+    include-message: always
+    include-binding-errors: always
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: when-authorized
+
+logging:
+  level:
+    root: INFO
+    com.aigateway: DEBUG
+    org.springframework.security: INFO
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+    operations-sorter: alpha
+  api-docs:
+    path: /v3/api-docs
+
+app:
+  security:
+    jwt:
+      secret: ${JWT_SECRET:change-me-in-prod-please-use-a-long-random-secret-at-least-32-chars}
+      expiration-minutes: ${JWT_EXPIRATION_MINUTES:60}
+      issuer: ai-gateway
+  ai:
+    # Provider: "openai" for OpenAI-compatible API, "mock" for a local deterministic echo
+    provider: ${AI_PROVIDER:mock}
+    openai:
+      base-url: ${OPENAI_BASE_URL:https://api.openai.com/v1}
+      api-key: ${OPENAI_API_KEY:}
+      default-model: ${OPENAI_MODEL:gpt-4o-mini}
+      timeout-seconds: 60
+  plans:
+    free:
+      requests-per-minute: 5
+      requests-per-day: 100
+      max-tokens-per-request: 1024
+    pro:
+      requests-per-minute: 60
+      requests-per-day: 10000
+      max-tokens-per-request: 4096
+    enterprise:
+      requests-per-minute: 600
+      requests-per-day: 1000000
+      max-tokens-per-request: 32000

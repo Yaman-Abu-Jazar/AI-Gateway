@@ -1,0 +1,33 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:testdb;MODE=PostgreSQL;DATABASE_TO_LOWER=TRUE;CASE_INSENSITIVE_IDENTIFIERS=TRUE;DB_CLOSE_DELAY=-1
+    username: sa
+    password: ""
+    driver-class-name: org.h2.Driver
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.H2Dialect
+  flyway:
+    locations: classpath:db/migration/common
+
+app:
+  security:
+    jwt:
+      secret: test-only-secret-value-that-is-definitely-long-enough-32
+      expiration-minutes: 60
+  ai:
+    provider: mock
+  plans:
+    free:
+      requests-per-minute: 5
+      requests-per-day: 100
+      max-tokens-per-request: 1024
+    pro:
+      requests-per-minute: 60
+      requests-per-day: 10000
+      max-tokens-per-request: 4096
+    enterprise:
+      requests-per-minute: 600
+      requests-per-day: 1000000
+      max-tokens-per-request: 32000
